@@ -1,5 +1,7 @@
 ## Pub monorepo tools
 
+Disclaimer: This is not an officially supported Google product.
+
 This repo contains a tool for creating a project-wide pubspec.yaml that depends on all pubspecs in sub-folders of the current directory.
 
 To run:
