@@ -10,8 +10,9 @@ import 'package:path/path.dart' as path;
 
 main() {
   if (File('pubspec.yaml').existsSync()) {
-    throw Exception(
-        'pubspec.yaml exists already. Run in top of a mono-repo with no existing pubspec.yaml');
+    fail(
+      'pubspec.yaml exists already. Run in top of a mono-repo with no existing pubspec.yaml',
+    );
   }
   final sdkVersion = Platform.version.split(' ').first;
   final pubspecs = Directory.current
@@ -20,7 +21,7 @@ main() {
       .where((f) => f.path.endsWith('/pubspec.yaml'))
       .toList();
   if (pubspecs.isEmpty) {
-    throw Exception('Found no pubspec.yaml files in child directories');
+    fail('Found no pubspec.yaml files in child directories');
   }
   final parsedPubspecs = pubspecs
       .map((f) => (
@@ -42,7 +43,7 @@ main() {
       mergedDevDependencies[name] = dep;
     } else {
       if (existing.source != dep.source) {
-        throw Exception(
+        fail(
             'Package $name has conflicting sources ${existing.source} and ${dep.source}');
       }
       mergedDevDependencies[name] = existing
@@ -79,4 +80,9 @@ ${parsedPubspecs.map((p) => '  ${p.$2.name}: {path: "${path.relative(path.dirnam
 ''';
   File('pubspec.yaml').writeAsStringSync(projectPubspec);
   print('wrote project-wide `pubspec.yaml`. Run `dart pub get` to resolve.');
+}
+
+Never fail(String message) {
+  print(message);
+  exit(-1);
 }
