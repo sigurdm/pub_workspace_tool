@@ -76,7 +76,9 @@ ${mergedDevDependencies.entries.map((e) {
   }).join('\n')}
 
 dependency_overrides:
-${parsedPubspecs.map((p) => '  ${p.$2.name}: {path: ${json.encode(path.relative(path.dirname(p.$1)))}}').join('\n')}
+${parsedPubspecs.map((p) => '  ${p.$2.name}: {path: ${json.encode(
+          // Use posix paths (forward-slashes) to make the file machine independent.
+          path.posix.joinAll(path.split(path.relative(path.dirname(p.$1)))))}}').join('\n')}
 ''';
   File('pubspec.yaml').writeAsStringSync(projectPubspec);
   print('wrote project-wide `pubspec.yaml`. Run `dart pub get` to resolve.');
