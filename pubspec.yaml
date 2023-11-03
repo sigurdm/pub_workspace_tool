@@ -1,0 +1,10 @@
+name: pub_workspace_tool
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  pub:
+    git:
+      url: https://github.com/dart-lang/pub
+      ref: c0dd3f5f809720d0bc00de10d6d2c01e90fa4700
+  path:
