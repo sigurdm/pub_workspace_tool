@@ -18,7 +18,7 @@ main() {
   final pubspecs = Directory.current
       .listSync(recursive: true)
       .whereType<File>()
-      .where((f) => f.path.endsWith('/pubspec.yaml'))
+      .where((f) => path.basename(f.path) == 'pubspec.yaml')
       .toList();
   if (pubspecs.isEmpty) {
     fail('Found no pubspec.yaml files in child directories');
